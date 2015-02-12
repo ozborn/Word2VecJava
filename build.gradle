@@ -1,9 +1,14 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
+apply plugin: 'maven-publish'
+apply plugin:'application'
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 version = '1.0'
+
+mainClassName = "com.medallia.word2vec.Word2VecExamples"
+applicationDefaultJvmArgs = ["-Xmx10g"]
 
 repositories {
     mavenCentral()
@@ -22,3 +27,24 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
 
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+			groupId 'com.medallia'
+            artifactId 'word2vecjava'
+            version '1.0'
+				
+            from components.java
+        }
+    }
+	repositories {
+        maven {
+            // change to point to your repo, e.g. http://my.org/repo
+            url "http://172.16.1.80:8081/artifactory/libs-release-local"
+			credentials {
+				username 'uucp'
+				password 'silverlake1234!'
+			}
+        }
+    }
+}
