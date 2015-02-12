@@ -11,6 +11,8 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.thrift.TException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
@@ -30,7 +32,13 @@ import com.medallia.word2vec.util.ThriftUtils;
 
 /** Example usages of {@link Word2VecModel} */
 public class Word2VecExamples {
+	private static final Logger logger = LoggerFactory.getLogger(Word2VecExamples.class);
 	private static final Log LOG = AutoLog.getLog();
+	
+	private static final String inputFile = "stackexchange-travel-norm1-phrase1";
+	private static final String modelFile = "stackexchange-travel-norm1-phrase1.model";
+//	private static final String inputFile = "news.2012.en.shuffled-norm1-phrase1";
+//	private static final String modelFile = "news.2012.en.shuffled-norm1-phrase1.model";
 	
 	/** Runs the example */
 	public static void main(String[] args) throws IOException, TException, UnknownWordException, InterruptedException {
@@ -43,9 +51,12 @@ public class Word2VecExamples {
 	 * demo-word.sh example from the open source C implementation
 	 */
 	public static void demoWord() throws IOException, TException, InterruptedException, UnknownWordException {
+		logger.trace("Entering demoWord()");
+		
 //		List<String> read = Common.readToList(new File("text8"));
 //		List<String> read = Common.readToList(new File("stackexchange-travel-norm1-phrase1"));
-		List<String> read = Common.readToList(new File("news.2012.en.shuffled-norm1-phrase1"));
+//		List<String> read = Common.readToList(new File("news.2012.en.shuffled-norm1-phrase1"));
+		List<String> read = Common.readToList(new File(inputFile));
 		List<List<String>> partitioned = Lists.transform(read, new Function<String, List<String>>() {
 			@Override
 			public List<String> apply(String input) {
@@ -57,14 +68,15 @@ public class Word2VecExamples {
 				.setMinVocabFrequency(5)
 				.useNumThreads(20)
 //				.setWindowSize(8)
-				.setWindowSize(10)
+//				.setWindowSize(10)
+				.setWindowSize(3)
 				.type(NeuralNetworkType.CBOW)
-//				.setLayerSize(5)
-				.setLayerSize(100)
+				.setLayerSize(5)
+//				.setLayerSize(100)
 				.useNegativeSamples(25)
 				.setDownSamplingRate(1e-4)
-//				.setNumIterations(1)
-				.setNumIterations(15)
+				.setNumIterations(1)
+//				.setNumIterations(15)
 				.setListener(new TrainingProgressListener() {
 					@Override public void update(Stage stage, double progress) {
 						System.out.println(String.format("%s is %.2f%% complete", Format.formatEnum(stage), progress * 100));
@@ -75,7 +87,8 @@ public class Word2VecExamples {
 		try (ProfilingTimer timer = ProfilingTimer.create(LOG, "Writing output to file")) {
 //			FileUtils.writeStringToFile(new File("text8.model"), ThriftUtils.serializeJson(model.toThrift()));
 //			FileUtils.writeStringToFile(new File("stackexchange-travel-norm1-phrase1.model"), ThriftUtils.serializeJson(model.toThrift()));
-			FileUtils.writeStringToFile(new File("news.2012.en.shuffled-norm1-phrase1.model"), ThriftUtils.serializeJson(model.toThrift()));
+//			FileUtils.writeStringToFile(new File("news.2012.en.shuffled-norm1-phrase1.model"), ThriftUtils.serializeJson(model.toThrift()));
+			FileUtils.writeStringToFile(new File(modelFile), ThriftUtils.serializeJson(model.toThrift()));
 		}
 		
 		interact(model.forSearch());
@@ -87,7 +100,8 @@ public class Word2VecExamples {
 		try (ProfilingTimer timer = ProfilingTimer.create(LOG, "Loading model")) {
 //			String json = Common.readFileToString(new File("text8.model"));
 //			String json = Common.readFileToString(new File("stackexchange-travel-norm1-phrase1.model"));
-			String json = Common.readFileToString(new File("news.2012.en.shuffled-norm1-phrase1.model"));
+//			String json = Common.readFileToString(new File("news.2012.en.shuffled-norm1-phrase1.model"));
+			String json = Common.readFileToString(new File(modelFile));
 			model = Word2VecModel.fromThrift(ThriftUtils.deserializeJson(new Word2VecModelThrift(), json));
 		}
 		interact(model.forSearch());
