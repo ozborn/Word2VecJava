@@ -10,6 +10,19 @@ version = '1.0'
 mainClassName = "com.medallia.word2vec.Word2VecExamples"
 applicationDefaultJvmArgs = ["-Xmx10g"]
 
+//create a single Jar with all dependencies
+task fatJar(type: Jar) {
+	manifest {
+		attributes 'Implementation-Title': 'Word2VecJava Jar File with Dependencies',  
+			'Implementation-Version': version,
+			'Main-Class': 'com.medallia.word2vec.Word2VecExamples'
+	}
+	//baseName = project.name + '-all'
+	baseName = 'word2vecjava-with-dependencies'
+	from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+	with jar
+}
+
 repositories {
     mavenCentral()
 }
@@ -39,12 +52,11 @@ publishing {
     }
 	repositories {
         maven {
-            // change to point to your repo, e.g. http://my.org/repo
-            url "http://172.16.1.80:8081/artifactory/libs-release-local"
-			credentials {
-				username 'uucp'
-				password 'silverlake1234!'
+            credentials {
+				username ''
+				password ''
 			}
+            url "http://172.16.1.80:8081/artifactory/libs-release-local"
         }
     }
 }
