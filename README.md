@@ -1,13 +1,22 @@
 # Word2vecJava
 
-This is a port of the open source C implementation of word2vec (https://code.google.com/p/word2vec/)
+[![Build Status](https://travis-ci.org/medallia/Word2VecJava.svg?branch=master)](https://travis-ci.org/medallia/Word2VecJava)
+
+This is a port of the open source C implementation of word2vec (https://code.google.com/p/word2vec/). You can browse/contribute the repository via [Github](https://github.com/medallia/Word2VecJava). Alternatively you can pull it from the central Maven repositories:
+```XML
+<dependency>
+  <groupId>com.medallia.word2vec</groupId>
+  <artifactId>Word2VecJava</artifactId>
+  <version>0.9.0</version>
+</dependency>
+```
 
 For more background information about word2vec and neural network training for the vector representation of words, please see the following papers.
 * http://ttic.uchicago.edu/~haotang/speech/1301.3781.pdf
 * http://papers.nips.cc/paper/5021-distributed-representations-of-words-and-phrases-and-their-compositionality.pdf
 * http://www-personal.umich.edu/~ronxin/pdf/w2vexp.pdf
 
-Note that this isn't a completely faithful rewrite, specifically:
+Note that this isn't a completely faithful rewrite, specifically: 
 
 ### When building the vocabulary from the training file:
 1. The original version does a reduction step when learning the vocabulary from the file when the vocab size hits 21 million words, removing any words that do not meet the minimum frequency threshold. This Java port has no such reduction step.
