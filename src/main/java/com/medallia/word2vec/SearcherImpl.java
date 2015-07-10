@@ -72,7 +72,7 @@ class SearcherImpl implements Searcher {
    * @return Vector for the given word
    * @throws UnknownWordException If word is not in the model's vocabulary
    */
-  private double[] getVector(String word) throws UnknownWordException {
+  @Override public double[] getVector(String word) throws UnknownWordException {
 	final double[] result = getVectorOrNull(word);
 	if(result == null)
 	  throw new UnknownWordException(word);
@@ -93,13 +93,21 @@ class SearcherImpl implements Searcher {
   }
 
   /** @return Vector difference from v1 to v2 */
-  private double[] getDifference(double[] v1, double[] v2) {
+  @Override public double[] getDifference(double[] v1, double[] v2) {
 	double[] diff = new double[model.layerSize];
 	for (int i = 0; i < model.layerSize; i++)
 	  diff[i] = v1[i] - v2[i];
 	return diff;
   }
 
+	/** @return Vector sum from v1 to v2 */
+	@Override public double[] getSum(double[] v1, double[] v2) {
+		double[] diff = new double[model.layerSize];
+		for (int i = 0; i < model.layerSize; i++)
+			diff[i] = v1[i] + v2[i];
+		return diff;
+	}
+	
   @Override public SemanticDifference similarity(String s1, String s2) throws UnknownWordException {
 	double[] v1 = getVector(s1);
 	double[] v2 = getVector(s2);
