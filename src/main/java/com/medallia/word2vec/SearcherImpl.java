@@ -39,6 +39,10 @@ class SearcherImpl implements Searcher {
 	return calculateDistance(getVector(s1), getVector(s2));
   }
 
+  @Override public double cosineDistance(double[] v1, double[] v2) {
+    return calculateDistance(v1, v2);
+  }
+
   @Override public boolean contains(String word) {
 	return word2vectorOffset.containsKey(word);
   }
@@ -55,6 +59,27 @@ class SearcherImpl implements Searcher {
 		}),
 		maxNumMatches
 	);
+  }
+
+  /** @return Get mean vector over all tokens */
+  @Override public double[] getMean(String[] tokens) {
+    double[] mean = new double[model.layerSize];
+    for (int i = 0; i < mean.length; i++) mean[i] = 0.0;
+    if (tokens == null || tokens.length == 0) return mean;
+    int n = 0;
+    for (int i = 0; i < tokens.length; i++) {
+      double[] vec = getVectorOrNull(tokens[i]);
+      if (vec == null) continue;
+      for (int j = 0; j < mean.length; j++) {
+        mean[j] += vec[j];
+      }
+      ++n;
+    }
+    // average summed vectors
+    for (int j = 0; j < mean.length; j++) {
+      mean[j] /= n;
+    }
+    return mean;
   }
 
   private double calculateDistance(double[] otherVec, double[] vec) {

@@ -19,7 +19,10 @@ public interface Searcher {
 	
 	/** @return Top matches to the given vector */
 	List<Match> getMatches(final double[] vec, int maxNumMatches);
-	
+
+        /** @return The mean vector over an array of string tokens. */
+        double[] getMean(String[] tokens);
+
 	/** Represents the similarity between two words */
 	public interface SemanticDifference {
 		/** @return Top matches to the given word which share this semantic relationship */
@@ -32,6 +35,9 @@ public interface Searcher {
 	/** @return cosine similarity between two words. */
 	double cosineDistance(String s1, String s2) throws UnknownWordException;
 	
+	/** @return cosine similarity between two vectors. */
+	double cosineDistance(double[] v1, double[] v2);
+
 	/** Represents a match to a search word */
 	public interface Match {
 		/** @return Matching word */
