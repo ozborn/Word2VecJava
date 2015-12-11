@@ -60,7 +60,7 @@ public interface Searcher {
 	
 	/** Exception when a word is unknown to the {@link Word2VecModel}'s vocabulary */
 	public static class UnknownWordException extends Exception {
-		UnknownWordException(String word) {
+		public UnknownWordException(String word) {
 			super(String.format("Unknown search word '%s'", word));
 		}
 	}
