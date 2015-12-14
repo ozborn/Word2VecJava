@@ -36,3 +36,4 @@
 *.sublime-*
 .nb-gradle
 /target/
+/dist/**
