@@ -24,7 +24,9 @@ import java.util.List;
 import java.util.Map;
 
 public class Word2VecModelThrift implements org.apache.thrift.TBase<Word2VecModelThrift, Word2VecModelThrift._Fields>, java.io.Serializable, Cloneable, Comparable<Word2VecModelThrift> {
-  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("Word2VecModelThrift");
+private static final long serialVersionUID = -6759229386491428932L;
+
+private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("Word2VecModelThrift");
 
   private static final org.apache.thrift.protocol.TField VOCAB_FIELD_DESC = new org.apache.thrift.protocol.TField("vocab", org.apache.thrift.protocol.TType.LIST, (short)1);
   private static final org.apache.thrift.protocol.TField LAYER_SIZE_FIELD_DESC = new org.apache.thrift.protocol.TField("layerSize", org.apache.thrift.protocol.TType.I32, (short)2);
@@ -107,7 +109,7 @@ public class Word2VecModelThrift implements org.apache.thrift.TBase<Word2VecMode
   // isset id assignments
   private static final int __LAYERSIZE_ISSET_ID = 0;
   private byte __isset_bitfield = 0;
-  private static _Fields optionals[] = {_Fields.VOCAB, _Fields.LAYER_SIZE, _Fields.VECTORS};
+  //private static _Fields optionals[] = {_Fields.VOCAB, _Fields.LAYER_SIZE, _Fields.VECTORS};
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);

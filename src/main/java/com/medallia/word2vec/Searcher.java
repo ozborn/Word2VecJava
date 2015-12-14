@@ -54,6 +54,8 @@ public interface Searcher {
 	
 	/** Exception when a word is unknown to the {@link Word2VecModel}'s vocabulary */
 	public static class UnknownWordException extends Exception {
+		private static final long serialVersionUID = 8347666306893053437L;
+
 		UnknownWordException(String word) {
 			super(String.format("Unknown search word '%s'", word));
 		}

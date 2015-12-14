@@ -4,7 +4,6 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.apache.commons.logging.Log;
-import org.joda.time.Duration;
 import org.joda.time.Period;
 import org.joda.time.format.PeriodFormat;
 

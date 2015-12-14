@@ -4,7 +4,6 @@ import com.medallia.word2vec.thrift.Word2VecModelThrift;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.ByteBuffer;
 import java.nio.DoubleBuffer;
 
 /**

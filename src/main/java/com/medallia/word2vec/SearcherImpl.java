@@ -8,7 +8,6 @@ import com.google.common.primitives.Doubles;
 import com.medallia.word2vec.util.Pair;
 
 import java.nio.DoubleBuffer;
-import java.util.Arrays;
 import java.util.List;
 
 /** Implementation of {@link Searcher} */
@@ -115,6 +114,8 @@ class SearcherImpl implements Searcher {
 
   /** Implementation of {@link Match} */
   private static class MatchImpl extends Pair<String, Double> implements Match {
+	private static final long serialVersionUID = 422917882439724424L;
+
 	private MatchImpl(String first, Double second) {
 	  super(first, second);
 	}
