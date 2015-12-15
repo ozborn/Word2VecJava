@@ -38,7 +38,7 @@ import com.medallia.word2vec.util.AC;
  */
 public class Word2VecModel {
 	final List<String> vocab;
-	final int layerSize;
+	public final int layerSize;
 	final DoubleBuffer vectors;
 	private final static long ONE_GB = 1024 * 1024 * 1024;
 

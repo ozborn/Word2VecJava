@@ -66,4 +66,10 @@ public interface Searcher {
 			super(String.format("Unknown search word '%s'", word));
 		}
 	}
+
+	double[] getSum(double[] v1, double[] v2);
+	
+	double[] getDifference(double[] v1, double[] v2);
+	
+	double[] getVector(String word) throws UnknownWordException;
 }
