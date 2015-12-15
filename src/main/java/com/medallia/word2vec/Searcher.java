@@ -9,13 +9,13 @@ import java.util.List;
 /** Provides search functionality */
 public interface Searcher {
 	/** @return true if a word is inside the model's vocabulary. */
-	boolean contains(String word);
+	public boolean contains(String word);
 	
 	/** @return Raw word vector */
-	ImmutableList<Double> getRawVector(String word) throws UnknownWordException;
+	public ImmutableList<Double> getRawVector(String word) throws UnknownWordException;
 	
 	/** @return Top matches to the given word */
-	List<Match> getMatches(String word, int maxMatches) throws UnknownWordException;
+	public List<Match> getMatches(String word, int maxMatches) throws UnknownWordException;
 	
 	/** @return Top matches to the given vector */
 	List<Match> getMatches(final double[] vec, int maxNumMatches);
