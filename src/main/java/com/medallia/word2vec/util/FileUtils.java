@@ -1,11 +1,8 @@
 package com.medallia.word2vec.util;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.List;
 import java.util.UUID;
 
 import com.google.common.base.Function;

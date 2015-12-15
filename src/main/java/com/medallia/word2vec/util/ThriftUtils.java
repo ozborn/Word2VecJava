@@ -10,6 +10,7 @@ import org.apache.thrift.protocol.TJSONProtocol;
 public final class ThriftUtils {
 	private static final String THRIFT_CHARSET = "utf-8";
 
+	/*
 	/** Serialize a JSON-encoded thrift object */
 	public static <T extends TBase> String serializeJson(T obj) throws TException {
 		// Tried having a static final serializer, but it doesn't seem to be thread safe

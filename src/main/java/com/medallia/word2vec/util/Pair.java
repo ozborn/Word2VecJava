@@ -109,7 +109,8 @@ public class Pair<K, V> implements Map.Entry<K, V>, Serializable {
 		}
 		return l;
 	}
-	
+
+	/*
 	private static <X, Y, C extends Collection<Pair<X, Y>>> C fromMapFlatten(C c, Map<? extends X, ? extends Collection<? extends Y>> m) {
 		for (Map.Entry<? extends X, ? extends Collection<? extends Y>> me : m.entrySet()) {
 			for (Y y : me.getValue())
@@ -117,7 +118,7 @@ public class Pair<K, V> implements Map.Entry<K, V>, Serializable {
 		}
 		return c;
 	}
-	
+	*/
 	@Override public K getKey() { return first; }
 	@Override public V getValue() { return second; }
 	@Override public V setValue(V value) { throw new UnsupportedOperationException(); }
@@ -220,12 +221,14 @@ public class Pair<K, V> implements Map.Entry<K, V>, Serializable {
 		};
 	}
 	
+	/*
 	private static <X, Y> Map<X, Y> fillMap(Map<X, Y> m, Iterable<? extends Pair<? extends X, ? extends Y>> pairs) {
 		for (Pair<? extends X, ? extends Y> p : pairs) {
 			m.put(p.first, p.second);
 		}
 		return m;
 	}
+	*/
 
 	/** @return the combination of all the elements in each collection. For instance if the first collection is
 	 * {@code [1, 2, 3]}, and the second one is {@code [a, b]}, then the result is {@code [(1, a), (1, b), (2, a), ...]}
