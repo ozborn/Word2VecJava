@@ -1,6 +1,7 @@
 package com.medallia.word2vec.neuralnetwork;
 
 import com.google.common.collect.ImmutableMultiset;
+
 import com.medallia.word2vec.Word2VecTrainerBuilder.TrainingProgressListener;
 import com.medallia.word2vec.huffman.HuffmanCoding.HuffmanNode;
 

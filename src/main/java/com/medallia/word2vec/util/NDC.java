@@ -3,10 +3,9 @@ package com.medallia.word2vec.util;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-/** Helper to create for nested diagnostic contexts */
+/** Helper to create {@link org.apache.log4j.NDC} for nested diagnostic contexts */
 public class NDC implements AC {
 	private static final Logger log = LogManager.getLogger();
-
 	private final int size;
 
 	/** Push all the contexts given and pop them when auto-closed */

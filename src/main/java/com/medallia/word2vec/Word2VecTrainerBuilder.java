@@ -242,7 +242,7 @@ public class Word2VecTrainerBuilder {
 						initialLearningRate,
 						useHierarchicalSoftmax
 					)
-			).train(log, listener, sentences);
+			).train(listener, sentences);
 	}
 	
 	/** Listener for model training progress */

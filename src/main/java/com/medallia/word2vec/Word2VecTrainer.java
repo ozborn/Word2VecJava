@@ -19,8 +19,6 @@ import com.medallia.word2vec.neuralnetwork.NeuralNetworkTrainer.NeuralNetworkMod
 import com.medallia.word2vec.util.AC;
 import com.medallia.word2vec.util.ProfilingTimer;
 
-import org.apache.logging.log4j.Logger;
-
 import java.util.List;
 import java.util.Map;
 
@@ -68,8 +66,8 @@ class Word2VecTrainer {
 	}
 	
 	/** Train a model using the given data */
-	Word2VecModel train(Logger log, TrainingProgressListener listener, Iterable<List<String>> sentences) throws InterruptedException {
-		try (ProfilingTimer timer = ProfilingTimer.createLoggingSubtasks(log, "Training word2vec")) {
+	Word2VecModel train(TrainingProgressListener listener, Iterable<List<String>> sentences) throws InterruptedException {
+		try (ProfilingTimer timer = ProfilingTimer.createLoggingSubtasks("Training word2vec")) {
 			final Multiset<String> counts;
 			
 			try (AC ac = timer.start("Acquiring word frequencies")) {

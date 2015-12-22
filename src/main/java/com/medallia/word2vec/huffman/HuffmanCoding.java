@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMultiset;
 import com.google.common.collect.Multiset.Entry;
+
 import com.medallia.word2vec.Word2VecTrainerBuilder.TrainingProgressListener;
 import com.medallia.word2vec.Word2VecTrainerBuilder.TrainingProgressListener.Stage;
 
@@ -15,6 +16,7 @@ import java.util.Map;
  * <p>
  * Note that the generated codes and the index of the parents are both used in the
  * hierarchical softmax portions of the neural network training phase
+ * <p>
  */
 public class HuffmanCoding {
 	/** Node */
@@ -40,7 +42,7 @@ public class HuffmanCoding {
 	private final TrainingProgressListener listener;
 	
 	/**
-	 * @param vocab {@link ImmutableMultiset} of tokens, sorted by frequency descending
+	 * @param vocab {@link Multiset} of tokens, sorted by frequency descending
 	 * @param listener Progress listener
 	 */
 	public HuffmanCoding(ImmutableMultiset<String> vocab, TrainingProgressListener listener) {

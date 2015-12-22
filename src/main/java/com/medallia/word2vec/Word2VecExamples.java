@@ -71,7 +71,7 @@ public class Word2VecExamples {
 				.train(partitioned);
 
 		// Writes model to a thrift file
-		try (ProfilingTimer timer = ProfilingTimer.create(log, "Writing output to file")) {
+		try (ProfilingTimer timer = ProfilingTimer.create("Writing output to file")) {
 			FileUtils.writeStringToFile(new File("text8.model"), ThriftUtils.serializeJson(model.toThrift()));
 		}
 
@@ -87,7 +87,7 @@ public class Word2VecExamples {
 	/** Loads a model and allows user to find similar words */
 	public static void loadModel() throws IOException, TException, UnknownWordException {
 		final Word2VecModel model;
-		try (ProfilingTimer timer = ProfilingTimer.create(log, "Loading model")) {
+		try (ProfilingTimer timer = ProfilingTimer.create("Loading model")) {
 			String json = Common.readFileToString(new File("text8.model"));
 			model = Word2VecModel.fromThrift(ThriftUtils.deserializeJson(new Word2VecModelThrift(), json));
 		}
@@ -121,7 +121,7 @@ public class Word2VecExamples {
 				})
 				.train(partitioned);
 		
-		try (ProfilingTimer timer = ProfilingTimer.create(log, "Writing output to file")) {
+		try (ProfilingTimer timer = ProfilingTimer.create("Writing output to file")) {
 			FileUtils.writeStringToFile(new File("300layer.20threads.5iter.model"), ThriftUtils.serializeJson(model.toThrift()));
 		}
 		

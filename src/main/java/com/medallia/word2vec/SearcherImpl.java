@@ -5,10 +5,10 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterables;
 import com.google.common.primitives.Doubles;
+
 import com.medallia.word2vec.util.Pair;
 
 import java.nio.DoubleBuffer;
-import java.util.Arrays;
 import java.util.List;
 
 /** Implementation of {@link Searcher} */
