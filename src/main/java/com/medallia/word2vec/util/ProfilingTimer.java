@@ -2,9 +2,9 @@ package com.medallia.word2vec.util;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
+
 import org.apache.commons.lang3.mutable.MutableInt;
-import org.apache.commons.logging.Log;
-import org.joda.time.Duration;
+import org.apache.logging.log4j.Logger;
 import org.joda.time.Period;
 import org.joda.time.format.PeriodFormat;
 
@@ -85,13 +85,13 @@ public class ProfilingTimer implements AC {
 		private String logAppendMessage = "";
 		private ProfilingTimerNode parent;
 		private final Map<String, ProfilingTimerNode> children = Maps.newLinkedHashMap();
-		private final Log log;
+		private final Logger log;
 
 		private long start = System.nanoTime();
 		private long totalNanos;
 		private long count;
 
-		private ProfilingTimerNode(String taskName, ProfilingTimerNode parent, Log log) {
+		private ProfilingTimerNode(String taskName, ProfilingTimerNode parent, Logger log) {
 			this.taskName = taskName;
 			if (parent != null) {
 				parent.addChild(this);
@@ -126,7 +126,7 @@ public class ProfilingTimer implements AC {
 			this.logAppendMessage += logAppendMessage;
 		}
 
-		private void log(int level, Log log) {
+		private void log(int level, Logger log) {
 			writeToLog(level, totalNanos, count, parent, taskName, log, logAppendMessage);
 
 			for (ProfilingTimerNode child : children.values()) {
@@ -152,7 +152,7 @@ public class ProfilingTimer implements AC {
 		@Override public void close() { }
 	};
 
-	private final Log log;
+	private final Logger log;
 	private final ThreadLocal<ProfilingTimerNode> current = new ThreadLocal<>();
 	private final ByteArrayOutputStream serializationOutput;
 
@@ -169,21 +169,21 @@ public class ProfilingTimer implements AC {
 	 * <p>
 	 * Notice that this method may return {@link #NONE} if {@link #enabled} is false.
 	 */
-	public static ProfilingTimer create(final Log log, final String processName, final Object... args) {
+	public static ProfilingTimer create(final Logger log, final String processName, final Object... args) {
 		return create(log, topLevelInfoOnly, null, processName, args);
 	}
 
-	/** Same as {@link #create(Log, String, Object...)} but logs subtasks as well */
-	public static ProfilingTimer createLoggingSubtasks(final Log log, final String processName, final Object... args) {
+	/** Same as {@link #create(Logger, String, Object...)} but logs subtasks as well */
+	public static ProfilingTimer createLoggingSubtasks(final Logger log, final String processName, final Object... args) {
 		return create(log, false, null, processName, args);
 	}
 
-	/** Same as {@link #create(Log, String, Object...)} but includes subtasks, and instead of writing to a log, it outputs the tree in serialized form */
+	/** Same as {@link #create(Logger, String, Object...)} but includes subtasks, and instead of writing to a log, it outputs the tree in serialized form */
 	public static ProfilingTimer createSubtasksAndSerialization(ByteArrayOutputStream serializationOutput, final String processName, final Object... args) {
 		return create(null, false, serializationOutput, processName, args);
 	}
 
-	private static ProfilingTimer create(final Log log, boolean topLevelInfoOnly, ByteArrayOutputStream serializationOutput, final String processName, final Object... args) {
+	private static ProfilingTimer create(final Logger log, boolean topLevelInfoOnly, ByteArrayOutputStream serializationOutput, final String processName, final Object... args) {
 		// do not use ternary as it creates an annoying resource leak warning
 		if (enabled)
 			if (topLevelInfoOnly)
@@ -223,7 +223,7 @@ public class ProfilingTimer implements AC {
 			return NONE;
 	}
 
-	private ProfilingTimer(Log log, ByteArrayOutputStream serializationOutput, String processName, Object... args) {
+	private ProfilingTimer(Logger log, ByteArrayOutputStream serializationOutput, String processName, Object... args) {
 		this.log = log;
 		this.serializationOutput = serializationOutput;
 		start(processName, args);
@@ -333,7 +333,7 @@ public class ProfilingTimer implements AC {
 	}
 
 	/** Writes one profiling line of information to the log */
-	private static void writeToLog(int level, long totalNanos, long count, ProfilingTimerNode parent, String taskName, Log log, String logAppendMessage) {
+	private static void writeToLog(int level, long totalNanos, long count, ProfilingTimerNode parent, String taskName, Logger log, String logAppendMessage) {
 		if (log == null) {
 			return;
 		}

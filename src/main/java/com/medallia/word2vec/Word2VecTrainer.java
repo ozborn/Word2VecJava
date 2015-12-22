@@ -9,15 +9,17 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Multiset;
 import com.google.common.collect.Multisets;
 import com.google.common.primitives.Doubles;
-import com.medallia.word2vec.util.AC;
-import com.medallia.word2vec.util.ProfilingTimer;
-import org.apache.commons.logging.Log;
+
 import com.medallia.word2vec.Word2VecTrainerBuilder.TrainingProgressListener;
 import com.medallia.word2vec.Word2VecTrainerBuilder.TrainingProgressListener.Stage;
 import com.medallia.word2vec.huffman.HuffmanCoding;
 import com.medallia.word2vec.huffman.HuffmanCoding.HuffmanNode;
 import com.medallia.word2vec.neuralnetwork.NeuralNetworkConfig;
 import com.medallia.word2vec.neuralnetwork.NeuralNetworkTrainer.NeuralNetworkModel;
+import com.medallia.word2vec.util.AC;
+import com.medallia.word2vec.util.ProfilingTimer;
+
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 import java.util.Map;
@@ -66,7 +68,7 @@ class Word2VecTrainer {
 	}
 	
 	/** Train a model using the given data */
-	Word2VecModel train(Log log, TrainingProgressListener listener, Iterable<List<String>> sentences) throws InterruptedException {
+	Word2VecModel train(Logger log, TrainingProgressListener listener, Iterable<List<String>> sentences) throws InterruptedException {
 		try (ProfilingTimer timer = ProfilingTimer.createLoggingSubtasks(log, "Training word2vec")) {
 			final Multiset<String> counts;
 			
