@@ -12,6 +12,8 @@ import java.util.Map.Entry;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.thrift.TException;
 
 import com.google.common.base.Function;
@@ -25,7 +27,7 @@ import com.medallia.word2vec.Word2VecTrainerBuilder.TrainingProgressListener;
 import com.medallia.word2vec.Word2VecTrainerBuilder.TrainingProgressListener.Stage;
 import com.medallia.word2vec.neuralnetwork.NeuralNetworkType;
 import com.medallia.word2vec.thrift.Word2VecModelThrift;
-import com.medallia.word2vec.util.AutoLog;
+//import com.medallia.word2vec.util.AutoLog;
 import com.medallia.word2vec.util.Common;
 import com.medallia.word2vec.util.Format;
 import com.medallia.word2vec.util.ProfilingTimer;
@@ -33,8 +35,8 @@ import com.medallia.word2vec.util.Strings;
 import com.medallia.word2vec.util.ThriftUtils;
 
 public class Word2Vec {
-	private static final Log LOG = AutoLog.getLog();
-	
+	//private static final Log LOG = AutoLog.getLog();
+	private static final Logger LOG = LogManager.getLogger();
 	/** Runs the example */
 	public static void main(String[] args) throws IOException, TException, UnknownWordException, InterruptedException {
 		launch();
@@ -44,7 +46,8 @@ public class Word2Vec {
 	/** Loads a model and allows user to find similar words */
 	public static void loadModelFromBin() throws IOException, TException, UnknownWordException {
 		final Word2VecModel model;
-		try (ProfilingTimer timer = ProfilingTimer.create(LOG, "Loading model")) {
+		
+		try (ProfilingTimer timer = ProfilingTimer.create("Loading model")) {
 			File file = new File("knowledge-vectors-skipgram1000.bin");
 			model = Word2VecModel.fromBinFile(file);
 		}
@@ -89,7 +92,7 @@ public class Word2Vec {
 					})
 					.train(partitioned);
 			
-			try (ProfilingTimer timer = ProfilingTimer.create(LOG, "Writing output to file")) {
+			try (ProfilingTimer timer = ProfilingTimer.create("Writing output to file")) {
 				FileUtils.writeStringToFile(new File("text8.model"), ThriftUtils.serializeJson(model.toThrift()));
 			}
 		}
@@ -126,7 +129,8 @@ public class Word2Vec {
 	/** Loads a model and allows user to find similar words */
 	public static void loadModel() throws IOException, TException, UnknownWordException {
 		final Word2VecModel model;
-		try (ProfilingTimer timer = ProfilingTimer.create(LOG, "Loading model")) {
+		
+		try (ProfilingTimer timer = ProfilingTimer.create("Loading model")) {
 			String json = Common.readFileToString(new File("text8.model"));
 			model = Word2VecModel.fromThrift(ThriftUtils.deserializeJson(new Word2VecModelThrift(), json));
 		}

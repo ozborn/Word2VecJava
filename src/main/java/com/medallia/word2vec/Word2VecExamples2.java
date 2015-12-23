@@ -9,21 +9,23 @@ import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.Log;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.thrift.TException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.medallia.word2vec.Searcher.Match;
-import com.medallia.word2vec.Searcher.SemanticDifference;
+//import com.medallia.word2vec.Searcher.SemanticDifference;
 import com.medallia.word2vec.Searcher.UnknownWordException;
 import com.medallia.word2vec.Word2VecTrainerBuilder.TrainingProgressListener;
 import com.medallia.word2vec.neuralnetwork.NeuralNetworkType;
 import com.medallia.word2vec.thrift.Word2VecModelThrift;
-import com.medallia.word2vec.util.AutoLog;
+//import com.medallia.word2vec.util.AutoLog;
 import com.medallia.word2vec.util.Common;
 import com.medallia.word2vec.util.Format;
 import com.medallia.word2vec.util.ProfilingTimer;
@@ -32,9 +34,7 @@ import com.medallia.word2vec.util.ThriftUtils;
 
 /** Example usages of {@link Word2VecModel} */
 public class Word2VecExamples2 {
-	private static final Logger logger = LoggerFactory.getLogger(Word2VecExamples2.class);
-	private static final Log LOG = AutoLog.getLog();
-	
+	private static final Logger logger = LogManager.getLogger();
 //	private static final String inputFile = "news.2012.en.shuffled-norm1-phrase1";
 //	private static final String modelFile = "news.2012.en.shuffled-norm1-phrase1.model";
 //	private static final String inputFile = "stackexchange-travel-norm1-phrase1";
@@ -96,7 +96,7 @@ public class Word2VecExamples2 {
 				})
 				.train(partitioned);
 		
-		try (ProfilingTimer timer = ProfilingTimer.create(LOG, "Writing output to file")) {
+		try (ProfilingTimer timer = ProfilingTimer.create("Writing output to file"))  {
 //			FileUtils.writeStringToFile(new File("text8.model"), ThriftUtils.serializeJson(model.toThrift()));
 //			FileUtils.writeStringToFile(new File("stackexchange-travel-norm1-phrase1.model"), ThriftUtils.serializeJson(model.toThrift()));
 //			FileUtils.writeStringToFile(new File("news.2012.en.shuffled-norm1-phrase1.model"), ThriftUtils.serializeJson(model.toThrift()));
@@ -109,7 +109,8 @@ public class Word2VecExamples2 {
 	/** Loads a model and allows user to find similar words */
 	public static void loadModel() throws IOException, TException, UnknownWordException {
 		final Word2VecModel model;
-		try (ProfilingTimer timer = ProfilingTimer.create(LOG, "Loading model")) {
+		
+		try (ProfilingTimer timer = ProfilingTimer.create("Loading model"))  {
 //			String json = Common.readFileToString(new File("text8.model"));
 //			String json = Common.readFileToString(new File("stackexchange-travel-norm1-phrase1.model"));
 //			String json = Common.readFileToString(new File("news.2012.en.shuffled-norm1-phrase1.model"));
@@ -146,7 +147,8 @@ public class Word2VecExamples2 {
 				})
 				.train(partitioned);
 		
-		try (ProfilingTimer timer = ProfilingTimer.create(LOG, "Writing output to file")) {
+		
+		try (ProfilingTimer timer = ProfilingTimer.create("Writing output to file")) {
 			FileUtils.writeStringToFile(new File("300layer.20threads.5iter.model"), ThriftUtils.serializeJson(model.toThrift()));
 		}
 		

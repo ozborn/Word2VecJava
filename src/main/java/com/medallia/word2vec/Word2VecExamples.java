@@ -31,7 +31,7 @@ import java.util.List;
 
 /** Example usages of {@link Word2VecModel} */
 public class Word2VecExamples {
-	private static final Logger log = LogManager.getLogger();
+	//private static final Logger log = LogManager.getLogger();
 	
 	/** Runs the example */
 	public static void main(String[] args) throws IOException, TException, UnknownWordException, InterruptedException {
