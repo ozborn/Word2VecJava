@@ -2,8 +2,11 @@ package com.medallia.word2vec.util;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
+
 import org.apache.commons.lang3.mutable.MutableInt;
-import org.apache.commons.logging.Log;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import org.joda.time.Period;
 import org.joda.time.format.PeriodFormat;
 
@@ -84,18 +87,17 @@ public class ProfilingTimer implements AC {
 		private String logAppendMessage = "";
 		private ProfilingTimerNode parent;
 		private final Map<String, ProfilingTimerNode> children = Maps.newLinkedHashMap();
-		private final Log log;
+		private static final Logger log = LogManager.getLogger();
 
 		private long start = System.nanoTime();
 		private long totalNanos;
 		private long count;
 
-		private ProfilingTimerNode(String taskName, ProfilingTimerNode parent, Log log) {
+		private ProfilingTimerNode(String taskName, ProfilingTimerNode parent) {
 			this.taskName = taskName;
 			if (parent != null) {
 				parent.addChild(this);
 			}
-			this.log = log;
 		}
 
 		private void addChild(ProfilingTimerNode child) {
@@ -115,7 +117,7 @@ public class ProfilingTimer implements AC {
 				start = CLOSED;
 				if (parent == null) {
 					try (AC ac = NDC.push(taskName)) {
-						log(0, log);
+						log(0);
 					}
 				}
 			}
@@ -125,11 +127,11 @@ public class ProfilingTimer implements AC {
 			this.logAppendMessage += logAppendMessage;
 		}
 
-		private void log(int level, Log log) {
-			writeToLog(level, totalNanos, count, parent, taskName, log, logAppendMessage);
+		private void log(int level) {
+			writeToLog(level, totalNanos, count, parent, taskName, logAppendMessage);
 
 			for (ProfilingTimerNode child : children.values()) {
-				child.log(level + 1, log);
+				child.log(level + 1);
 			}
 		}
 
@@ -151,7 +153,7 @@ public class ProfilingTimer implements AC {
 		@Override public void close() { }
 	};
 
-	private final Log log;
+	private static final Logger log = LogManager.getLogger();
 	private final ThreadLocal<ProfilingTimerNode> current = new ThreadLocal<>();
 	private final ByteArrayOutputStream serializationOutput;
 
@@ -168,21 +170,21 @@ public class ProfilingTimer implements AC {
 	 * <p>
 	 * Notice that this method may return {@link #NONE} if {@link #enabled} is false.
 	 */
-	public static ProfilingTimer create(final Log log, final String processName, final Object... args) {
-		return create(log, topLevelInfoOnly, null, processName, args);
+	public static ProfilingTimer create(final String processName, final Object... args) {
+		return create(topLevelInfoOnly, null, processName, args);
 	}
 
-	/** Same as {@link #create(Log, String, Object...)} but logs subtasks as well */
-	public static ProfilingTimer createLoggingSubtasks(final Log log, final String processName, final Object... args) {
-		return create(log, false, null, processName, args);
+	/** Same as {@link #create(String, Object...)} but logs subtasks as well */
+	public static ProfilingTimer createLoggingSubtasks(final String processName, final Object... args) {
+		return create(false, null, processName, args);
 	}
 
-	/** Same as {@link #create(Log, String, Object...)} but includes subtasks, and instead of writing to a log, it outputs the tree in serialized form */
+	/** Same as {@link #create(String, Object...)} but includes subtasks, and instead of writing to a log, it outputs the tree in serialized form */
 	public static ProfilingTimer createSubtasksAndSerialization(ByteArrayOutputStream serializationOutput, final String processName, final Object... args) {
-		return create(null, false, serializationOutput, processName, args);
+		return create(false, serializationOutput, processName, args);
 	}
 
-	private static ProfilingTimer create(final Log log, boolean topLevelInfoOnly, ByteArrayOutputStream serializationOutput, final String processName, final Object... args) {
+	private static ProfilingTimer create(boolean topLevelInfoOnly, ByteArrayOutputStream serializationOutput, final String processName, final Object... args) {
 		// do not use ternary as it creates an annoying resource leak warning
 		if (enabled)
 			if (topLevelInfoOnly)
@@ -206,7 +208,7 @@ public class ProfilingTimer implements AC {
 						if (startNanos != ProfilingTimerNode.CLOSED) {
 							String taskName = String.format(processName, args);
 							try (AC ac = NDC.push(taskName)) {
-								writeToLog(0, System.nanoTime() - startNanos, 1, null, taskName, log, logAppendMessage);
+								writeToLog(0, System.nanoTime() - startNanos, 1, null, taskName, logAppendMessage);
 							}
 							startNanos = ProfilingTimerNode.CLOSED;
 						}
@@ -217,13 +219,12 @@ public class ProfilingTimer implements AC {
 					}
 				};
 			else
-				return new ProfilingTimer(log, serializationOutput, processName, args);
+				return new ProfilingTimer(serializationOutput, processName, args);
 		else
 			return NONE;
 	}
 
-	private ProfilingTimer(Log log, ByteArrayOutputStream serializationOutput, String processName, Object... args) {
-		this.log = log;
+	private ProfilingTimer(ByteArrayOutputStream serializationOutput, String processName, Object... args) {
 		this.serializationOutput = serializationOutput;
 		start(processName, args);
 	}
@@ -326,17 +327,13 @@ public class ProfilingTimer implements AC {
 			}
 		}
 		if (node == null) {
-			node = new ProfilingTimerNode(taskName, parent, log);
+			node = new ProfilingTimerNode(taskName, parent);
 		}
 		return node;
 	}
 
 	/** Writes one profiling line of information to the log */
-	private static void writeToLog(int level, long totalNanos, long count, ProfilingTimerNode parent, String taskName, Log log, String logAppendMessage) {
-		if (log == null) {
-			return;
-		}
-
+	private static void writeToLog(int level, long totalNanos, long count, ProfilingTimerNode parent, String taskName, String logAppendMessage) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < level; i++) {
 			sb.append('\t');

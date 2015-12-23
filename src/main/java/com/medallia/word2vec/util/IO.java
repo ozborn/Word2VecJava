@@ -2,6 +2,7 @@ package com.medallia.word2vec.util;
 
 import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
+
 import org.apache.commons.io.IOUtils;
 
 import java.io.ByteArrayInputStream;

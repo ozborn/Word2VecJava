@@ -1,5 +1,16 @@
 package com.medallia.word2vec;
 
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
+import com.google.common.primitives.Doubles;
+
+import com.medallia.word2vec.thrift.Word2VecModelThrift;
+import com.medallia.word2vec.util.AC;
+import com.medallia.word2vec.util.Common;
+import com.medallia.word2vec.util.ProfilingTimer;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -13,16 +24,6 @@ import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.google.common.annotations.VisibleForTesting;
-import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
-import com.google.common.primitives.Doubles;
-import com.medallia.word2vec.thrift.Word2VecModelThrift;
-import com.medallia.word2vec.util.Common;
-import com.medallia.word2vec.util.ProfilingTimer;
-import com.medallia.word2vec.util.AC;
 
 
 /**

@@ -1,13 +1,12 @@
 package com.medallia.word2vec.util;
 
+import com.google.common.base.Function;
+import com.google.common.base.Strings;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.UUID;
-
-import com.google.common.base.Function;
-
-import com.google.common.base.Strings;
 
 /**
  * Collection of file-related utilities.

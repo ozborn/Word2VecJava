@@ -4,10 +4,12 @@ import com.google.common.base.MoreObjects;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Multiset;
-import com.medallia.word2vec.util.AutoLog;
-import org.apache.commons.logging.Log;
+
 import com.medallia.word2vec.neuralnetwork.NeuralNetworkConfig;
 import com.medallia.word2vec.neuralnetwork.NeuralNetworkType;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 import java.util.Map;
@@ -62,7 +64,7 @@ import java.util.Map;
  * I ask you to reach out if it is not.
  */
 public class Word2VecTrainerBuilder {
-	private static final Log LOG = AutoLog.getLog();
+	private static final Logger log = LogManager.getLogger();
 	
 	private Integer layerSize;
 	private Integer windowSize;
@@ -240,7 +242,7 @@ public class Word2VecTrainerBuilder {
 						initialLearningRate,
 						useHierarchicalSoftmax
 					)
-			).train(LOG, listener, sentences);
+			).train(listener, sentences);
 	}
 	
 	/** Listener for model training progress */
