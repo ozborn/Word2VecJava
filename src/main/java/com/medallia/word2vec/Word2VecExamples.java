@@ -43,7 +43,8 @@ public class Word2VecExamples {
 	 * demo-word.sh example from the open source C implementation
 	 */
 	public static void demoWord() throws IOException, TException, InterruptedException, UnknownWordException {
-		File f = new File("text8");
+		//File f = new File("text8");
+		File f = new File("/home/eik/ross/test15000.txt");
 		if (!f.exists())
 	       	       throw new IllegalStateException("Please download and unzip the text8 example from http://mattmahoney.net/dc/text8.zip");
 		List<String> read = Common.readToList(f);
