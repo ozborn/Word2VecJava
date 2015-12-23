@@ -15,8 +15,6 @@ import com.medallia.word2vec.util.Strings;
 import com.medallia.word2vec.util.ThriftUtils;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.apache.thrift.TException;
 
 import java.io.BufferedReader;

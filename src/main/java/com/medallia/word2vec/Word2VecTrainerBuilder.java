@@ -8,8 +8,8 @@ import com.google.common.collect.Multiset;
 import com.medallia.word2vec.neuralnetwork.NeuralNetworkConfig;
 import com.medallia.word2vec.neuralnetwork.NeuralNetworkType;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import java.util.List;
 import java.util.Map;
@@ -64,7 +64,7 @@ import java.util.Map;
  * I ask you to reach out if it is not.
  */
 public class Word2VecTrainerBuilder {
-	private static final Logger log = LogManager.getLogger();
+	private static final Logger log = LogManager.getRootLogger();
 	
 	private Integer layerSize;
 	private Integer windowSize;

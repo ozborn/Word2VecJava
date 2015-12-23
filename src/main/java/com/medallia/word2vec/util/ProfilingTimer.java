@@ -4,8 +4,8 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 
 import org.apache.commons.lang3.mutable.MutableInt;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import org.joda.time.Period;
 import org.joda.time.format.PeriodFormat;
@@ -87,7 +87,7 @@ public class ProfilingTimer implements AC {
 		private String logAppendMessage = "";
 		private ProfilingTimerNode parent;
 		private final Map<String, ProfilingTimerNode> children = Maps.newLinkedHashMap();
-		private static final Logger log = LogManager.getLogger();
+		private static final Logger log = LogManager.getRootLogger();
 
 		private long start = System.nanoTime();
 		private long totalNanos;
@@ -153,7 +153,7 @@ public class ProfilingTimer implements AC {
 		@Override public void close() { }
 	};
 
-	private static final Logger log = LogManager.getLogger();
+	private static final Logger log = LogManager.getRootLogger();
 	private final ThreadLocal<ProfilingTimerNode> current = new ThreadLocal<>();
 	private final ByteArrayOutputStream serializationOutput;
 

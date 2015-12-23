@@ -12,8 +12,8 @@ import java.util.Map.Entry;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.apache.thrift.TException;
 
 import com.google.common.base.Function;
@@ -36,7 +36,7 @@ import com.medallia.word2vec.util.ThriftUtils;
 
 public class Word2Vec {
 	//private static final Log LOG = AutoLog.getLog();
-	private static final Logger LOG = LogManager.getLogger();
+	private static final Logger LOG = LogManager.getRootLogger();
 	/** Runs the example */
 	public static void main(String[] args) throws IOException, TException, UnknownWordException, InterruptedException {
 		launch();

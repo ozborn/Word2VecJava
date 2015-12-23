@@ -10,8 +10,8 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 //import org.apache.commons.logging.Log;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.apache.thrift.TException;
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
@@ -34,7 +34,7 @@ import com.medallia.word2vec.util.ThriftUtils;
 
 /** Example usages of {@link Word2VecModel} */
 public class Word2VecExamples2 {
-	private static final Logger logger = LogManager.getLogger();
+	private static final Logger logger = LogManager.getRootLogger();
 //	private static final String inputFile = "news.2012.en.shuffled-norm1-phrase1";
 //	private static final String modelFile = "news.2012.en.shuffled-norm1-phrase1.model";
 //	private static final String inputFile = "stackexchange-travel-norm1-phrase1";
