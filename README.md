@@ -1,6 +1,6 @@
 # Word2vecJava
 
-[![Build Status](https://travis-ci.org/medallia/Word2VecJava.svg?branch=master)](https://travis-ci.org/medallia/Word2VecJava)
+Fork of https://github.com/eikdk/Word2VecJava - updates Apache Thrift to avoid logging headaches.
 
 This is a port of the open source C implementation of word2vec (https://code.google.com/p/word2vec/). You can browse/contribute the repository via [Github](https://github.com/medallia/Word2VecJava). Alternatively you can pull it from the central Maven repositories:
 ```XML
